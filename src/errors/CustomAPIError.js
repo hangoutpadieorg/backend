@@ -1,9 +1,8 @@
-
-
 class CustomAPIError extends Error {
+    // eslint-disable-next-line no-useless-constructor
     constructor(message) {
-        super(message)
+        super(message);
     }
 }
 
-module.exports = CustomAPIError
+module.exports = CustomAPIError;

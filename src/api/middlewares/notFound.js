@@ -1,7 +1,6 @@
-const { StatusCodes } = require("http-status-codes")
+const { StatusCodes } = require('http-status-codes');
 
-const notFound = (req, res) => {
-    return res.status(StatusCodes.NOT_FOUND).json({ message: 'Route does not exist' })
-}
+const notFound = (req, res) =>
+    res.status(StatusCodes.NOT_FOUND).json({ message: 'Route does not exist' });
 
-module.exports = notFound
+module.exports = notFound;
