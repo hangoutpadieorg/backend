@@ -4,8 +4,8 @@ const NotFound = require('./NotFound');
 const Unauthorized = require('./Unauthorized');
 
 module.exports = {
-    BadRequest,
-    Forbidden,
-    NotFound,
-    Unauthorized
+  BadRequest,
+  Forbidden,
+  NotFound,
+  Unauthorized,
 };
