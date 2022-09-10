@@ -4,12 +4,17 @@ require('express-async-errors');
 const errorHandlerMiddleWare = require('./api/middlewares/errorHandler');
 const notFound = require('./api/middlewares/notFound');
 
+const authRouter = require('./api/routes/auth');
+
 // Application instance should be below the above require statements
 const app = express();
 
-// Application routes are going to be here
+app.use(express.json());
 
-// app.use(notFound)
-// app.use(errorHandlerMiddleWare)
+// Application routes are going to be here
+app.use('/api/v1/auth', authRouter);
+
+app.use(notFound);
+app.use(errorHandlerMiddleWare);
 
 module.exports = app;
