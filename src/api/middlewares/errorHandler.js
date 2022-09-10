@@ -13,7 +13,7 @@ const errorHandlerMiddleware = (err, req, res, next) => {
 
   // This handles the unique values constraint in email field
   if (err.code && err.code === 11000) {
-    customError.statusCode = 400;
+    customError.statusCode = 409;
     customError.message = `Duplicate value entered for the ${Object.keys(
       err.keyValue
     )} field`;
