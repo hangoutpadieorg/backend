@@ -6,6 +6,19 @@ const errorHandlerMiddleware = (err, req, res, next) => {
     message: err.message || 'Something went wrong, please try again later.',
   };
 
+  // This handles the error thrown by the Joi Validator
+  if (err.isJoi) {
+    customError.statusCode = 400;
+  }
+
+  // This handles the unique values constraint in email field
+  if (err.code && err.code === 11000) {
+    customError.statusCode = 409;
+    customError.message = `Duplicate value entered for the ${Object.keys(
+      err.keyValue
+    )} field`;
+  }
+
   return res
     .status(customError.statusCode)
     .json({ message: customError.message });
