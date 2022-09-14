@@ -49,11 +49,17 @@ const forgotPasswordController = async (req, res) => {
   const text = ` Here is your reset password link: ${url} 
   If you did not make this request, kindly ignore. `;
 
-  sendMail('Your password reset link is only valid for 10 mins', email, text, 'forgot-password.hbs', data);
+  sendMail(
+    'Your password reset link is only valid for 10 mins',
+    email,
+    text,
+    'forgot-password.hbs',
+    data
+  );
 
-  return res
-    .status(StatusCodes.OK)
-    .json({ message: 'A reset password mail has been sent to the provided email' });
+  return res.status(StatusCodes.OK).json({
+    message: 'A reset password mail has been sent to the provided email',
+  });
 };
 
 module.exports = {
