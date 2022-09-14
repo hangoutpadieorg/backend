@@ -41,19 +41,19 @@ const forgotPasswordController = async (req, res) => {
   if (!foundUser) throw new NotFound('No user found with this email');
 
   const token = foundUser.createPasswordResetToken();
-  foundUser.passwordResetToken = token;
+
   const result = await foundUser.save();
   const url = `http://localhost:${process.env.PORT}/api/v1/auth/reset-password/${foundUser.email}/${token}`;
 
   const data = { url };
-  const text = ` Here is your forgot password link: ${url} 
+  const text = ` Here is your reset password link: ${url} 
   If you did not make this request, kindly ignore. `;
 
-  sendMail('Forgot Password', email, text, 'forgot-password.hbs', data);
+  sendMail('Your password reset link is only valid for 10 mins', email, text, 'forgot-password.hbs', data);
 
   return res
     .status(StatusCodes.OK)
-    .json({ message: 'A forgot password mail has been sent to the provided' });
+    .json({ message: 'A reset password mail has been sent to the provided email' });
 };
 
 module.exports = {
