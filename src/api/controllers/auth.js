@@ -43,7 +43,7 @@ const forgotPasswordController = async (req, res) => {
   const token = foundUser.createPasswordResetToken();
 
   const result = await foundUser.save();
-  const url = `http://localhost:${process.env.PORT}/api/v1/auth/reset-password/${foundUser.email}/${token}`;
+  const url = `${req.protocol}://${req.get('host')}/api/v1/auth/reset-password/${foundUser.email}/${token}`;
 
   const data = { url };
   const text = ` Here is your reset password link: ${url} 
