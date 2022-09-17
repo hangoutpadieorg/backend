@@ -49,7 +49,7 @@ userSchema.methods.createPasswordResetToken = function () {
     .update(resetToken)
     .digest('hex');
   this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
-  return resetToken;
+  return this.passwordResetToken;
 };
 
 const User = mongoose.model('User', userSchema);
