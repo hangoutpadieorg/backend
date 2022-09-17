@@ -131,3 +131,39 @@ describe('Test forgot pasword endpoint', () => {
       .expect(200);
   });
 });
+
+describe('Test reset endpoint', () => {
+  beforeAll(async () => {
+    await mongoose.connect(process.env.DB_LOCAL, {});
+  });
+  afterAll(async () => {
+    await User.deleteMany({});
+    await mongoose.connection.close();
+  });
+
+  test('Should return 201 for created user for reset-password endpoint', async () => {
+    const user = {
+      name: 'test',
+      email: 'test@test.com',
+      password: 'test123465',
+    };
+
+    await request(app).post('/api/v1/auth/register').send(user).expect(201);
+  });
+
+  test('Should return 200 for password reset', async () => {
+    const user = {
+      name: 'test',
+      email: 'test@test.com',
+      password: 'test123465',
+    };
+
+    const response = await request(app)
+      .post('/api/v1/auth/forgot-password')
+      .send({ email: user.email });
+
+    const url = `/api/v1/auth/reset-password/${user.email}/${response.body.token}`;
+
+    await request(app).patch(url).send({ password: 'testing123' }).expect(200);
+  });
+});
