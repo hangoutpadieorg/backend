@@ -167,3 +167,43 @@ describe('Test reset endpoint', () => {
     await request(app).patch(url).send({ password: 'testing123' }).expect(200);
   });
 });
+
+describe('Test login endpoint', () => {
+  beforeAll(async () => {
+    await mongoose.connect(process.env.DB_LOCAL, {});
+  });
+  afterAll(async () => {
+    await User.deleteMany({});
+    await mongoose.connection.close();
+  });
+
+  test('Should return 201 for created user for login endpoint', async () => {
+    const user = {
+      name: 'test',
+      email: 'test@test.com',
+      password: 'test123465',
+    };
+
+    await request(app).post('/api/v1/auth/register').send(user).expect(201);
+  });
+
+  test('Should return 401 for bad credentials', async () => {
+    const user = {
+      name: 'test',
+      email: 'test@test.com',
+      password: 'test1234',
+    };
+
+    await request(app).post('/api/v1/auth/login').send(user).expect(401);
+  });
+
+  test('Should return 200 for valid credentials', async () => {
+    const user = {
+      name: 'test',
+      email: 'test@test.com',
+      password: 'test123465',
+    };
+
+    await request(app).post('/api/v1/auth/login').send(user).expect(200);
+  });
+});

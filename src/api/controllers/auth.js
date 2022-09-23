@@ -1,9 +1,12 @@
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const { StatusCodes } = require('http-status-codes');
 const User = require('../../models/userModel');
 const sendMail = require('../../utils/sendMail');
 const { registrationSchema } = require('../../utils/validations');
 const { BadRequest, Conflict, NotFound } = require('../../errors');
+
+const TOKEN_EXPIRATION = 15 * 60 * 1000;
 
 const registerController = async (req, res) => {
   const validationResult = await registrationSchema.validateAsync(req.body);
@@ -26,6 +29,41 @@ const registerController = async (req, res) => {
   const user = await User.create(userObject);
 
   return res.status(StatusCodes.CREATED).json({ message: 'User created' });
+};
+
+const loginController = async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password)
+    throw new BadRequest('Email and Password fields cannot be empty');
+
+  const foundUser = await User.findOne({ email }, 'password');
+
+  if (!foundUser)
+    throw new BadRequest('There is no user found with this email');
+
+  const match = await bcrypt.compare(password, foundUser.password);
+
+  if (match) {
+    const accessToken = jwt.sign(
+      {
+        UserInfo: {
+          email: foundUser.email,
+          role: foundUser.role,
+        },
+      },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: TOKEN_EXPIRATION }
+    );
+
+    return res
+      .status(StatusCodes.OK)
+      .json({ accessToken, expiresIn: TOKEN_EXPIRATION });
+  }
+
+  return res
+    .status(StatusCodes.UNAUTHORIZED)
+    .json({ message: 'Invalid credentials' });
 };
 
 const forgotPasswordController = async (req, res) => {
@@ -61,7 +99,7 @@ const forgotPasswordController = async (req, res) => {
 
   return res.status(StatusCodes.OK).json({
     message: 'A reset password mail has been sent to the provided email',
-    // token: foundUser.passwordResetToken, // This is only for testing
+    // token: foundUser.passwordResetToken, // enable this when you are about to run tests
   });
 };
 
@@ -97,4 +135,5 @@ module.exports = {
   registerController,
   forgotPasswordController,
   resetPasswordController,
+  loginController,
 };
