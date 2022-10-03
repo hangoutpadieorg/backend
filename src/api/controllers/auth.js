@@ -20,15 +20,20 @@ const registerController = async (req, res) => {
 
   const password = await bcrypt.hash(validationResult.password, 10);
 
+  const role = req.vendors ? 'vendor' : 'user';
+
   const userObject = {
     name: validationResult.name,
     email: validationResult.email,
     password,
+    role,
   };
+
+  const message = `${role === 'user' ? 'User' : 'Vendor'} created`;
 
   const user = await User.create(userObject);
 
-  return res.status(StatusCodes.CREATED).json({ message: 'User created' });
+  return res.status(StatusCodes.CREATED).json({ message });
 };
 
 const loginController = async (req, res) => {

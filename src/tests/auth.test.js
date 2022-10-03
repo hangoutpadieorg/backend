@@ -6,7 +6,7 @@ const User = require('../models/userModel');
 
 // DB_LOCAL should be set to a test database
 
-describe('Test register route', () => {
+describe('Test user register route', () => {
   beforeAll(async () => {
     await mongoose.connect(process.env.DB_LOCAL, {});
   });
@@ -18,7 +18,10 @@ describe('Test register route', () => {
   test('Should return 400 for empty values', async () => {
     const user = {};
 
-    await request(app).post('/api/v1/auth/register').send(user).expect(400);
+    await request(app)
+      .post('/api/v1/auth/users/register')
+      .send(user)
+      .expect(400);
   });
 
   test('Should return 400 for empty password and email values', async () => {
@@ -26,7 +29,10 @@ describe('Test register route', () => {
       name: 'test',
     };
 
-    await request(app).post('/api/v1/auth/register').send(user).expect(400);
+    await request(app)
+      .post('/api/v1/auth/users/register')
+      .send(user)
+      .expect(400);
   });
 
   test('Should return 400 for bad email value', async () => {
@@ -35,7 +41,10 @@ describe('Test register route', () => {
       email: 'test',
     };
 
-    await request(app).post('/api/v1/auth/register').send(user).expect(400);
+    await request(app)
+      .post('/api/v1/auth/users/register')
+      .send(user)
+      .expect(400);
   });
 
   test('Should return 400 for empty password value', async () => {
@@ -44,7 +53,10 @@ describe('Test register route', () => {
       email: 'test@test.com',
     };
 
-    await request(app).post('/api/v1/auth/register').send(user).expect(400);
+    await request(app)
+      .post('/api/v1/auth/users/register')
+      .send(user)
+      .expect(400);
   });
 
   test('Should return 201 for user created', async () => {
@@ -54,7 +66,33 @@ describe('Test register route', () => {
       password: 'test123465',
     };
 
-    await request(app).post('/api/v1/auth/register').send(user).expect(201);
+    await request(app)
+      .post('/api/v1/auth/users/register')
+      .send(user)
+      .expect(201);
+  });
+});
+
+describe('Test vendor register route', () => {
+  beforeAll(async () => {
+    await mongoose.connect(process.env.DB_LOCAL, {});
+  });
+  afterAll(async () => {
+    await mongoose.connection.close();
+  });
+  afterEach(() => User.deleteMany({}));
+
+  test('Should return 201 for vendor created', async () => {
+    const user = {
+      name: 'test',
+      email: 'test@test.com',
+      password: 'test123465',
+    };
+
+    await request(app)
+      .post('/api/v1/auth/vendors/register')
+      .send(user)
+      .expect(201);
   });
 });
 
@@ -74,7 +112,10 @@ describe('Test register route for duplicate emails', () => {
       password: 'test123465',
     };
 
-    await request(app).post('/api/v1/auth/register').send(user).expect(201);
+    await request(app)
+      .post('/api/v1/auth/users/register')
+      .send(user)
+      .expect(201);
   });
 
   test('Should return 409 for duplicate email', async () => {
@@ -84,7 +125,10 @@ describe('Test register route for duplicate emails', () => {
       password: 'test123465',
     };
 
-    await request(app).post('/api/v1/auth/register').send(user).expect(409);
+    await request(app)
+      .post('/api/v1/auth/users/register')
+      .send(user)
+      .expect(409);
   });
 });
 
@@ -115,7 +159,10 @@ describe('Test forgot pasword endpoint', () => {
       password: 'test123465',
     };
 
-    await request(app).post('/api/v1/auth/register').send(user).expect(201);
+    await request(app)
+      .post('/api/v1/auth/users/register')
+      .send(user)
+      .expect(201);
   });
 
   test('Should return 200 for email sent to user', async () => {
@@ -148,7 +195,10 @@ describe('Test reset endpoint', () => {
       password: 'test123465',
     };
 
-    await request(app).post('/api/v1/auth/register').send(user).expect(201);
+    await request(app)
+      .post('/api/v1/auth/users/register')
+      .send(user)
+      .expect(201);
   });
 
   test('Should return 200 for password reset', async () => {
@@ -184,7 +234,10 @@ describe('Test login endpoint', () => {
       password: 'test123465',
     };
 
-    await request(app).post('/api/v1/auth/register').send(user).expect(201);
+    await request(app)
+      .post('/api/v1/auth/users/register')
+      .send(user)
+      .expect(201);
   });
 
   test('Should return 401 for bad credentials', async () => {
