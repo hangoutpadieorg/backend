@@ -1,5 +1,4 @@
 const express = require('express');
-const dotEnv = require('dotenv');
 require('express-async-errors');
 const { StatusCodes } = require('http-status-codes');
 const errorHandlerMiddleWare = require('./api/middlewares/errorHandler');

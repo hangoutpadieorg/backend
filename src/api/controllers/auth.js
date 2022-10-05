@@ -31,7 +31,7 @@ const registerController = async (req, res) => {
 
   const message = `${role === 'user' ? 'User' : 'Vendor'} created`;
 
-  const user = await User.create(userObject);
+  await User.create(userObject);
 
   return res.status(StatusCodes.CREATED).json({ message });
 };
@@ -85,7 +85,7 @@ const forgotPasswordController = async (req, res) => {
 
   const token = foundUser.createPasswordResetToken();
 
-  const result = await foundUser.save();
+  await foundUser.save();
   const url = `${req.protocol}://${req.get(
     'host'
   )}/api/v1/auth/reset-password/${foundUser.email}/${token}`;
@@ -129,7 +129,7 @@ const resetPasswordController = async (req, res) => {
   user.passwordResetExpires = undefined;
   user.passwordResetToken = undefined;
 
-  const result = await user.save();
+  await user.save();
 
   return res
     .status(StatusCodes.OK)

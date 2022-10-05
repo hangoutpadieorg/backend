@@ -30,7 +30,7 @@ const sendMail = async (subject, to, text, html, data) => {
     html: htmlToSend,
   };
 
-  const result = await transport.sendMail(mailOptions);
+  await transport.sendMail(mailOptions);
 };
 
 module.exports = sendMail;
