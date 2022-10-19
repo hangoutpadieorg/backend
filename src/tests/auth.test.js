@@ -218,7 +218,7 @@ describe('Test reset endpoint', () => {
   });
 });
 
-describe('Test login endpoint', () => {
+describe('Test change-password endpoint', () => {
   beforeAll(async () => {
     await mongoose.connect(process.env.DB_LOCAL, {});
   });
@@ -227,7 +227,7 @@ describe('Test login endpoint', () => {
     await mongoose.connection.close();
   });
 
-  test('Should return 201 for created user for login endpoint', async () => {
+  test('Should return 201 for created user for registration endpoint', async () => {
     const user = {
       name: 'test',
       email: 'test@test.com',
@@ -240,23 +240,27 @@ describe('Test login endpoint', () => {
       .expect(201);
   });
 
-  test('Should return 401 for bad credentials', async () => {
-    const user = {
-      name: 'test',
-      email: 'test@test.com',
-      password: 'test1234',
-    };
-
-    await request(app).post('/api/v1/auth/login').send(user).expect(401);
-  });
-
-  test('Should return 200 for valid credentials', async () => {
+  test('Should return 200 for changed password', async () => {
     const user = {
       name: 'test',
       email: 'test@test.com',
       password: 'test123465',
     };
 
-    await request(app).post('/api/v1/auth/login').send(user).expect(200);
+    const response = await request(app)
+      .post('/api/v1/auth/login')
+      .send(user)
+      .expect(200);
+
+    const userObj = {
+      oldPassword: 'test123465',
+      newPassword: 'testingnewpassword',
+    };
+
+    await request(app)
+      .patch('/api/v1/auth/login')
+      .send(userObj)
+      .set('Authorization', `Bearer ${response.body.accessToken}`)
+      .expect(200);
   });
 });

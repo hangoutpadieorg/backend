@@ -136,9 +136,34 @@ const resetPasswordController = async (req, res) => {
     .json({ message: 'The password has been changed.' });
 };
 
+const changePassword = async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+
+  if (!oldPassword || !newPassword)
+    throw new BadRequest('Both passwords are required');
+
+  const user = await User.findOne({ email: req.user.email }, 'password');
+
+  const match = await bcrypt.compare(oldPassword, user.password);
+
+  if (match) {
+    const password = await bcrypt.hash(newPassword, 10);
+
+    user.password = password;
+    await user.save();
+
+    return res.status(StatusCodes.OK).json({ message: 'password changed' });
+  }
+
+  return res
+    .status(StatusCodes.UNAUTHORIZED)
+    .json({ message: 'Invalid credentials' });
+};
+
 module.exports = {
   registerController,
   forgotPasswordController,
   resetPasswordController,
   loginController,
+  changePassword,
 };
