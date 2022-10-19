@@ -5,6 +5,7 @@ const User = require('../../models/userModel');
 const sendMail = require('../../utils/sendMail');
 const { registrationSchema } = require('../../utils/validations');
 const { BadRequest, Conflict, NotFound } = require('../../errors');
+const admins = require('../../config/admins_list');
 
 const TOKEN_EXPIRATION = 15 * 60 * 1000;
 
@@ -20,7 +21,11 @@ const registerController = async (req, res) => {
 
   const password = await bcrypt.hash(validationResult.password, 10);
 
-  const role = req.vendors ? 'vendor' : 'user';
+  let role = req.vendors ? 'vendor' : 'user';
+
+  if (admins.includes(validationResult.email)) {
+    role = 'admin';
+  }
 
   const userObject = {
     name: validationResult.name,
@@ -33,7 +38,7 @@ const registerController = async (req, res) => {
 
   await User.create(userObject);
 
-  return res.status(StatusCodes.CREATED).json({ message });
+  return res.status(StatusCodes.CREATED).json({ message, user });
 };
 
 const loginController = async (req, res) => {

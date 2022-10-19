@@ -96,6 +96,29 @@ describe('Test vendor register route', () => {
   });
 });
 
+describe('Test admin register route', () => {
+  beforeAll(async () => {
+    await mongoose.connect(process.env.DB_LOCAL, {});
+  });
+  afterAll(async () => {
+    await mongoose.connection.close();
+  });
+  afterEach(() => User.deleteMany({}));
+
+  test('Should return 201 for admin created', async () => {
+    const user = {
+      name: 'test',
+      email: 'test@test.com',
+      password: 'test123465',
+    };
+
+    const response = await request(app)
+      .post('/api/v1/auth/users/register')
+      .send(user);
+    expect(response.body.user.role).toBe('admin');
+  });
+});
+
 describe('Test register route for duplicate emails', () => {
   beforeAll(async () => {
     await mongoose.connect(process.env.DB_LOCAL, {});
