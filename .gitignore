@@ -1,3 +1,11 @@
 node_modules
 package-lock.json
 src/config/.env
+.env
+api
+config
+errors
+tests
+utils
+app.js
+public

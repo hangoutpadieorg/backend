@@ -1,8 +1,10 @@
 require('dotenv').config({ path: `${__dirname}/../config/.env` });
 const request = require('supertest');
 const mongoose = require('mongoose');
-const app = require('../app');
+//const app = require('../app');
 const User = require('../models/userModel');
+
+
 
 // DB_LOCAL should be set to a test database
 

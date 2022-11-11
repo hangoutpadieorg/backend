@@ -14,20 +14,39 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     validate: [validator.isEmail, 'please provide a valid email address'],
   },
+  phoneNumber: {
+    type: String,
+  },
 
   role: {
     type: String,
     enum: ['user', 'vendor', 'admin'],
     default: 'user',
+    required: [true, 'Please provide user type']
   },
-
+  gender: {
+    type: String,
+    //required: [true, 'Please provide gender']
+  },
+  image: {
+    type: String,
+    default:
+      "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
+  },
   password: {
     type: String,
     required: [true, 'Please provide a password'],
     minlength: 8,
-    select: false,
   },
 
+  verificationCode: {
+    type: Number
+  },
+  isEmailVerified: {
+    type: Boolean,
+    defualt: false,
+  },
+  tokens:{type: Object,},
   createdAt: {
     type: Date,
     default: Date.now,
@@ -37,8 +56,8 @@ const userSchema = new mongoose.Schema({
   passwordResetExpires: Date,
   active: {
     type: Boolean,
-    default: true,
-    select: false,
+    default: false,
+    
   },
 });
 
