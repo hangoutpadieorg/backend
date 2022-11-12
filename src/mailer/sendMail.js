@@ -46,10 +46,6 @@ class SendMail {
     }
 }
 
-class Mails{
-  forgotPassword() {
-    
-  }
-}
+
   
 module.exports= {SendMail}

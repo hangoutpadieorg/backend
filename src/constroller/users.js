@@ -270,11 +270,11 @@ const changePassword = async (req, res, next) => {
   } catch (error) {
     //  const message = errors.message.split(" : ");
     // console.log(error.message)
-    // console.log(error.stack)
-    // if (error.message.includes("ValidationError")=== true) {
-    //     const message = error.message.split(":")[0];
-    //     return next(new AppError(`Validation Error : ${message}`,StatusCodes.BAD_REQUEST))
-    //   }
+     console.log(error.stack)
+    if (error.message.includes("ValidationError")=== true) {
+        const message = error.message.split(":")[0];
+        return next(new AppError(`Validation Error : ${message}`,StatusCodes.BAD_REQUEST))
+      }
 
     return next(
       new AppError(

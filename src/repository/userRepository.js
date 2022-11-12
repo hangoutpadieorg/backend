@@ -28,9 +28,6 @@ class UserDbQuery{
           { new: true }
         );
     }
-    async isUserActive(email) {
-    
-    }
   
     async updateUserToken(email, newToken) {
         const data = await User.findOneAndUpdate({ email: email }, { $set: { tokens:{newToken, signedAt:Date.now()}  } }, { new: true })
