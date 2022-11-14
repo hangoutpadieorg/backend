@@ -8,8 +8,8 @@ router.post('/users/register', );
 router.post('/signUp', signUp)
 router.post('/signIn', signIn);
 router.post('/activateAccount', activateAccount);
-router.post('/signOut',isAuthenticated,isAuthorized, signOut)
-router.post('/forgotPassword',isAuthenticated,isAuthorized, forgotPassword)
+router.delete('/signOut',isAuthenticated,isAuthorized, signOut)
+router.post('/forgotPassword', forgotPassword)
 router.patch('/resetPassword', resetPassword);
 router.patch('/changePassword',isAuthenticated,isAuthorized, changePassword)
 

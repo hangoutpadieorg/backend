@@ -20,8 +20,13 @@ const isAuthenticated = async (req, res, next) => {
         req.user = user;
         next();
     } catch (error) {
-        if (error.name === "TokenExpiredError") {
-            return next(new AppError("Unauthenticated! Expired Token", StatusCodes.UNAUTHORIZED))
+        if (error.stack.includes("JsonWebTokenError") === true) {
+            const message = error.message.split(":")[0];
+            return next(new AppError(`Unauthenticated Token!:${message} `, StatusCodes.UNAUTHORIZED))
+        };
+        if (error.stack.includes("TokenExpiredError") === true) {
+            const message = error.message.split(":")[0];
+            return next(new AppError(`Unauthenticated Token!:${message} `, StatusCodes.UNAUTHORIZED))
         };
         return next(new AppError(`Unable to Authenticate user with error: ${error}`, StatusCodes.SERVICE_UNAVAILABLE));
     }

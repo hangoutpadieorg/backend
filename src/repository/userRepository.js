@@ -13,9 +13,7 @@ class UserDbQuery{
     }
     async findUserByCode(code) {
         const convert = Number(code);
-        console.log(code)
         const data = await User.findOne({ verificationCode: convert });
-        console.log(data)
         if (data === null) {
             let isNotValid = "isNotValid";
             return isNotValid;
@@ -31,7 +29,6 @@ class UserDbQuery{
   
     async updateUserToken(email, newToken) {
         const data = await User.findOneAndUpdate({ email: email }, { $set: { tokens:{newToken, signedAt:Date.now()}  } }, { new: true })
-        console.log(data)
         return data
     }
     async updateVerificationCode(email, otp) {
@@ -40,7 +37,6 @@ class UserDbQuery{
     }
     async updateUserPassword(email, hashedPassword) {
         const modify = await User.findOneAndUpdate({ email }, { $set: { password: hashedPassword } }, { new: true })
-        console.log(modify)
         return modify
     }
 }

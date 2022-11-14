@@ -35,7 +35,6 @@ const { GMAIL_HOST, GMAIL_USERNAME, GMAIL_PASSWORD, ENV, Sendgrid } =
 
 class SendMail {
   send(mailOptions) {
-      console.log("i got here")
       mail().sendMail(mailOptions, (error, info) => {
         if (error) {
           return console.log(error);

@@ -71,10 +71,11 @@ const errorController = (err, req, res, next) => {
         error: error.message,
       });
     };
-    if (error.stack.includes("ValidationError")=== true) {
-      const message = error.message.split(":")[0];
-      return next(new AppError(`Validation Error : ${message}`,StatusCodes.BAD_REQUEST))
-    }
+
+    // if (err.stack.includes("ValidationError")=== true) {
+    //   const message = err.message.split(":")[0];
+    //   return next(new AppError(`Validation Error : ${message}`,StatusCodes.BAD_REQUEST))
+    // }
   } else {
     return res.status(err.statusCode || 400).json({
       success: false,

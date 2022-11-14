@@ -28,7 +28,6 @@ class Utilities {
   }
   async generateAccessToken(user) {
     const jwsToken = String(process.env.SecretKey);
-    console.log(jwsToken);
     const payload = await userDbQuery.findOneUser(user);
     let data = {
       user_id: payload._id,

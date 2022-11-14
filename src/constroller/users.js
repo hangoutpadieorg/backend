@@ -65,6 +65,10 @@ const signUp = async (req, res, next) => {
     const message = `${role === 'user' ? 'User' : 'Vendor'} created`;
     return res.status(StatusCodes.CREATED).json({ message, User });
   } catch (err) {
+    if (err.stack.includes("ValidationError")=== true) {
+      const message = err.message.split(":")[0];
+      return next(new AppError(`Validation Error : ${message}`,StatusCodes.BAD_REQUEST))
+    }
     return next(
       new AppError(`Unable to register user with error: ${err}`, 404)
     );
@@ -81,14 +85,14 @@ const signIn = async (req, res, next) => {
       return next(
         new AppError(
           'There is no user found with this email',
-          StatusCodes.BAD_REQUEST
+          StatusCodes.NOT_FOUND
         )
       );
     }
     const hashedPassword = Utility.generateHash(validationResult.password);
     if (hashedPassword != foundUser.password) {
       return next(
-        new AppError('Password is not correct', StatusCodes.BAD_REQUEST)
+        new AppError('Password is not correct', StatusCodes.NOT_ACCEPTABLE)
       );
     }
     const checkisActive = await validator.isActive(validationResult.email);
@@ -107,6 +111,10 @@ const signIn = async (req, res, next) => {
       .status(StatusCodes.OK)
       .json({ token, expiresIn: TOKEN_EXPIRATION });
   } catch (err) {
+    if (err.stack.includes("ValidationError")=== true) {
+      const message = err.message.split(":")[0];
+      return next(new AppError(`Validation Error : ${message}`,StatusCodes.BAD_REQUEST))
+    }
     return next(new AppError(`Unable to signIn user with error: ${err}`, 404));
   }
 };
@@ -116,7 +124,7 @@ const activateAccount = async (req, res, next) => {
     const validationResult = await validator.codeSchema.validateAsync(req.body);
     const foundUser = await userDbQuery.findUserByCode(validationResult.OTP);
     if (foundUser === 'isNotValid') {
-      return next(new AppError('Invalid OTP', StatusCodes.BAD_REQUEST));
+      return next(new AppError('Invalid OTP', StatusCodes.NOT_ACCEPTABLE));
     }
     if (foundUser.active != false) {
       return next(new AppError('Email already verified', StatusCodes.CONFLICT));
@@ -142,6 +150,10 @@ const activateAccount = async (req, res, next) => {
       success: true,
     });
   } catch (err) {
+    if (err.stack.includes("ValidationError")=== true) {
+      const message = err.message.split(":")[0];
+      return next(new AppError(`Validation Error : ${message}`,StatusCodes.BAD_REQUEST))
+    }
     return next(
       new AppError(`Unable to activate user with error: ${err}`, 404)
     );
@@ -206,16 +218,19 @@ const resetPassword = async (req, res, next) => {
     if (verifyOtp === 'isNotValid')
       return next(new AppError('Invalid OTP', StatusCodes.NOT_ACCEPTABLE));
     const hashedPassword = Utility.generateHash(validationResult.password);
-    console.log(hashedPassword);
-    const updateUserPassword = await userDbQuery.updateUserPassword(
+    if(verifyOtp.password===hashedPassword)return next(new AppError("Password already set", StatusCodes.CONFLICT))
+     await userDbQuery.updateUserPassword(
       verifyOtp.email,
       hashedPassword
     );
-
     return res
       .status(StatusCodes.ACCEPTED)
       .json({ success: true, message: 'Password reset successfully' });
   } catch (error) {
+    if (error.stack.includes("ValidationError")=== true) {
+      const message = error.message.split(":")[0];
+      return next(new AppError(`Validation Error : ${message}`,StatusCodes.BAD_REQUEST))
+    }
     return next(
       new AppError(
         `Unable to signIn user with error: ${error}`,
@@ -227,8 +242,6 @@ const resetPassword = async (req, res, next) => {
 
 const changePassword = async (req, res, next) => {
   try {
-    // const key = "Unable to signIn user with error:  ValidationError: \"confirmPassword\" must be [ref:password]"
-    // console.log(key.includes("ValidationError"))
     const validationResult = await validator.changePasswordSchema.validateAsync(
       req.body
     );
@@ -268,14 +281,10 @@ const changePassword = async (req, res, next) => {
       .status(StatusCodes.ACCEPTED)
       .json({ success: true, message: 'Password successfully updated' });
   } catch (error) {
-    //  const message = errors.message.split(" : ");
-    // console.log(error.message)
-     console.log(error.stack)
-    if (error.message.includes("ValidationError")=== true) {
-        const message = error.message.split(":")[0];
-        return next(new AppError(`Validation Error : ${message}`,StatusCodes.BAD_REQUEST))
-      }
-
+    if (error.stack.includes("ValidationError")=== true) {
+      const message = error.message.split(":")[0];
+      return next(new AppError(`Validation Error : ${message}`,StatusCodes.BAD_REQUEST))
+    }
     return next(
       new AppError(
         `Unable to signIn user with error:  ${error}`,
