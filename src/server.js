@@ -48,19 +48,23 @@ app.all('*', ( req, res, next) => {
 });
 
 app.use(errorController);
-
 app.listen(PORT, async () => {
-  async function run() {
-    try {
-      await mongoose.connect(dbUrl);
-      console.log(`Successfully connected to database ${dbUrl}`);
-      console.log(
-        `Server started successfulyy on PORT https://localhost:${PORT}`
-      );
-    } catch (error) {
-      console.log(`Trouble connecting to Database with error: ${error}`);
-    }
-  }
-  run().catch(console.dir);
-});
+  console.log(
+    `Server started successfulyy on PORT https://localhost:${PORT}`
+  );
+})
+// app.listen(PORT, async () => {
+//   async function run() {
+//     try {
+//       await mongoose.connect(dbUrl);
+//       console.log(`Successfully connected to database ${dbUrl}`);
+//       console.log(
+//         `Server started successfulyy on PORT https://localhost:${PORT}`
+//       );
+//     } catch (error) {
+//       console.log(`Trouble connecting to Database with error: ${error}`);
+//     }
+//   }
+//   run().catch(console.dir);
+// });
 module.exports = app;
