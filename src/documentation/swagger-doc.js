@@ -13,7 +13,7 @@ const swaggerDocumentation = {
             description: "Local Dev"
         },
         {
-            url: "",
+            url: "https://hangoutpadie.onrender.com",
             description: "Production Dev"
         },
     ],
