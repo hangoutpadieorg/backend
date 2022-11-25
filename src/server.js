@@ -9,7 +9,8 @@ const errorController = require('./middleware/errorHandler');
 const catchAsync = require('./services/errorHandlers/catchAsync');
 const connect = require('mongoose');
 const users = require('../src/routes/users');
-const swaggerDocumentation= require('./documentation/swagger-doc')
+const swaggerDocumentation = require('./documentation/swagger-doc')
+const {client}= require("./services/database/database")
 
 
 dotenv.config();
@@ -49,6 +50,9 @@ app.all('*', ( req, res, next) => {
 
 app.use(errorController);
 app.listen(PORT, async () => {
+  await client.connect();
+  const connection = await client.db("test").command({ ping: 1 });
+  console.log(connection)
   console.log(
     `Server started successfulyy on PORT https://localhost:${PORT}`
   );

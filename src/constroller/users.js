@@ -22,8 +22,9 @@ const signUp = async (req, res, next) => {
     const validationResult = await validator.registrationSchema.validateAsync(
       req.body
     );
-
+  
     const foundUser = await userDbQuery.findOneUser(validationResult.email);
+    
     if (foundUser) {
       return next(
         new AppError(
@@ -32,6 +33,7 @@ const signUp = async (req, res, next) => {
         )
       );
     }
+   
     const password = Utility.generateHash(validationResult.password);
     const code = Utility.code();
     let role = validationResult.role;

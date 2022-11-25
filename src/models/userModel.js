@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+const {Schema, model} = require('mongoose');
 const validator = require('validator');
 const crypto = require('crypto');
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
   name: {
     type: String,
     required: [true, 'Please provide name'],
@@ -71,5 +71,5 @@ userSchema.methods.createPasswordResetToken = function () {
   return this.passwordResetToken;
 };
 
-const User = mongoose.model('User', userSchema);
+const User = model('User', userSchema);
 module.exports = User;

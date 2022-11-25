@@ -1,4 +1,4 @@
-// const crypto = require('node:crypto');
+const crypto = require('node:crypto');
 const Jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const { compile } = require('html-to-text');
@@ -9,7 +9,7 @@ const { FRO, TOKEN_EXPIRATION, SecretKey } = process.env;
 const userDbQuery = new UserDbQuery();
 class Utilities {
   code() {
-    //return crypto.randomInt(100000, 1000000);
+    return crypto.randomInt(100000, 1000000);
   }
   convertEmail() {
     const convert = compile({
