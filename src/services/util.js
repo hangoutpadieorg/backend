@@ -1,4 +1,4 @@
-const crypto = require('node:crypto');
+const crypto = require('crypto');
 const Jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const { compile } = require('html-to-text');
