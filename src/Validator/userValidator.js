@@ -8,8 +8,8 @@ class Validator {
     email: Joi.string().email().required(),
     password: Joi.string()
       .required()
-      .min(8)
-      .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
+      .min(8),
+      //.pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
     confirmPassword: Joi.ref('password'),
     role: Joi.string().required().valid('vendor', 'user'),
     //phoneNumber: Joi.number().required().min(11),
@@ -40,15 +40,15 @@ class Validator {
     OTP: Joi.number().required().min(6),
     password: Joi.string()
       .required()
-      .min(8)
-      .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
+      .min(8),
+      //.pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
     confirmPassword: Joi.ref('password'),
   });
   changePasswordSchema = Joi.object({
     password: Joi.string()
       .required()
-      .min(8)
-      .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
+      .min(8),
+      //.pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
     confirmPassword: Joi.ref('password'),
   });
 }

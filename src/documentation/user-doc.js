@@ -146,13 +146,13 @@ const createUser = {
               type: "string",
               description:
                 "A unique password of the user with a combination of capital letter, small letter, numbers and signs, minimum lenght: 6, max. lenght: 16",
-              example: "Gxo@k.123ftz-f",
+              example: "Gxo@k.123ftz",
             },
             confirmPassword: {
               type: "string",
               description:
                 "A unique password of the user with a combination of capital letter, small letter, numbers and signs, minimum lenght: 6, max. lenght: 16",
-              example: "Gxo@k.123ftz-f",
+              example: "Gxo@k.123ftz",
             },
           },
         },
@@ -491,13 +491,13 @@ const changePassword = {
               type: "string",
               description:
                 "A unique password of the user with a combination of capital letter, small letter, numbers and signs, minimum lenght: 6, max. lenght: 16",
-              example: "Gxo@k.123ftz-f",
+              example: "Gxo@k.123ftz",
             },
             confirmPassword: {
               type: "string",
               description:
                 "A unique password of the user with a combination of capital letter, small letter, numbers and signs, minimum lenght: 6, max. lenght: 16",
-              example: "Gxo@k.123ftz-f",
+              example: "Gxo@k.123ftz",
             },
           },
         },
