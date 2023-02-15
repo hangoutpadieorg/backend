@@ -4,18 +4,29 @@ const nodemailerSendgrid = require('nodemailer-sendgrid');
 
 
 dotenv.config();
-const { GMAIL_HOST, GMAIL_USERNAME, GMAIL_PASSWORD, ENV, Sendgrid } =
+const { MAIL_HOST, MAIL_USERNAME, MAIL_PASSWORD, ENV, Sendgrid, GMAIL_HOST, GMAIL_USERNAME, GMAIL_PASSWORD, } =
     process.env;
   
     function mail() {
         let transporter;
-        if (ENV == "prod") {
+        if (ENV == "devo") {
           transporter = nodemailer.createTransport(
             nodemailerSendgrid({
               apiKey:
               Sendgrid ,
             })
           );
+        } else if(ENV== 'prod') {
+          transporter = nodemailer.createTransport({
+            host: MAIL_HOST,
+            port: 465,
+            secure: true, // true for 465, false for other ports
+            auth: {
+              user: MAIL_USERNAME, // generated ethereal user
+              pass: MAIL_PASSWORD, // generated ethereal password
+            },
+            tls: { rejectUnauthorized: false },
+          });
         } else {
           transporter = nodemailer.createTransport({
             host: GMAIL_HOST,
@@ -27,10 +38,10 @@ const { GMAIL_HOST, GMAIL_USERNAME, GMAIL_PASSWORD, ENV, Sendgrid } =
             },
             tls: { rejectUnauthorized: false },
           });
-        }
+      };
       
         return transporter;
-}
+};
       
 
 class SendMail {

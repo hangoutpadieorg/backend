@@ -6,6 +6,7 @@ const AppError = require('../services/errorHandlers/errors');
 const dotenv = require('dotenv');
 const { Utilities } = require('../services/util');
 const { SendMail } = require('../mailer/sendMail');
+//const {SendMail} = require('../mailer/mailchimpMailer')
 const bcrypt = require('bcrypt');
 
 dotenv.config();
@@ -314,6 +315,36 @@ const signOut = async (req, res, next) => {
     );
   }
 };
+
+const mailtest = async (req, res, next) => {
+  try {
+
+    const mailOptions = {
+      from: FRO,
+      to: 'samlaja1292@gmail.com',
+      text: `Hello `,
+
+      subject: `subject Test`,
+      html: 'testing mail',
+    };
+    const mail = await sendMail.send(mailOptions)
+    console.log(mail)
+    // if (!mail) {
+    //   return res.status(StatusCodes.EXPECTATION_FAILED).json({
+    //     succes: false,
+    //     data: "failed"
+    //   })
+    // }
+    //const mail =await sendMail.mail({name:'my template'})
+    //const mail =await sendMail.senders()
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      mail
+    })
+  } catch (error) {
+    return next(new AppError(`failed to send mail with error: ${error}`, StatusCodes.EXPECTATION_FAILED))
+  }
+};
 module.exports = {
   signUp,
   signIn,
@@ -322,4 +353,5 @@ module.exports = {
   forgotPassword,
   resetPassword,
   changePassword,
+  mailtest
 };

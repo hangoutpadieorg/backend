@@ -1,5 +1,5 @@
 const express = require('express');
-const { signUp, signIn, activateAccount,signOut,forgotPassword,resetPassword,changePassword } = require('../constroller/users')
+const { signUp, signIn, activateAccount,signOut,forgotPassword,resetPassword,changePassword, mailtest } = require('../constroller/users')
 const {isAuthenticated,isAuthorized} = require('../middleware/isAuth')
 
 const router = express.Router();
@@ -11,7 +11,8 @@ router.post('/activateAccount', activateAccount);
 router.delete('/signOut',isAuthenticated,isAuthorized, signOut)
 router.post('/forgotPassword', forgotPassword)
 router.patch('/resetPassword', resetPassword);
-router.patch('/changePassword',isAuthenticated,isAuthorized, changePassword)
+router.patch('/changePassword', isAuthenticated, isAuthorized, changePassword);
+router.post('/mail', mailtest)
 
 
 module.exports = router;

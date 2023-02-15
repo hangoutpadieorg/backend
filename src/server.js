@@ -9,6 +9,7 @@ const errorController = require('./middleware/errorHandler');
 const catchAsync = require('./services/errorHandlers/catchAsync');
 const connect = require('mongoose');
 const users = require('../src/routes/users');
+const hangoutCenterRoute= require('../src/routes/hangoutcenterRoute')
 const swaggerDocumentation = require('./documentation/swagger-doc')
 const {client}= require("./services/database/database")
 
@@ -21,6 +22,7 @@ const dbUrl = String(process.env.DB_URL);
 const PORT = process.env.PORT || 5000;
 const app = express();
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:false}))
 app.use(cors());
 app.use(express.json());
 
@@ -29,6 +31,7 @@ app.use("/documentations", swaggerDoc.setup(swaggerDocumentation));
 
 
 app.use('/api', users);
+app.use('/api', hangoutCenterRoute);
 
 app.get('/hangoutPadie', async (req, res, next) => {
   try {
