@@ -1,4 +1,6 @@
-const { serverRouteDoc, userRouteDoc } = require('./user-doc')
+const { hangoutCenterRouteDoc } = require('./hangoutCenter-doc');
+const { serverRouteDoc, userRouteDoc } = require('./user-doc');
+//const {hangoutCenterRouteDoc}=require('./hangoutCenter-doc')
 
 const swaggerDocumentation = {
     openapi: "3.0.0",
@@ -26,13 +28,17 @@ const swaggerDocumentation = {
             name: "User",
             description: "User Routes"
         },
+        {
+            name: "HangoutCenter",
+            description: "Hangoutcenter Routes"
+        }
        
         
     ],
     paths: {
         ...serverRouteDoc,
         ...userRouteDoc,
-        
+        ...hangoutCenterRouteDoc,
         
     },
     
