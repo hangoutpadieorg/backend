@@ -27,8 +27,8 @@ const hongoutcenterSchema = new Schema({
     },
     categories: {
         type: String,
-        enum: ['Bar', 'Lounge', 'Cafe', 'Restorant', 'Park, Gardens & Reserves', 'Cinemas', 'Tourist Center', 'Beach', 'Gallery'],
-        default: 'Bar',
+        enum: ['bar', 'lounge', 'cafe', 'restorant', 'park, gardens & reserves', 'cinemas', 'tourist-center', 'beach', 'gallery'],
+        default: 'bar',
         required: [true, 'Please provide a category']
     },
     openHours: {

@@ -10,7 +10,7 @@ const AppError = require('../services/errorHandlers/errors');
 const dotenv = require('dotenv');
 const { Utilities } = require('../services/util');
 const { SendMail } = require('../mailer/sendMail');
-const { registerDecorator } = require('handlebars');
+
 
 dotenv.config();
 
@@ -138,10 +138,10 @@ class HangoutCenterController {
       const data = await hangoutcenter.findOneHangoutCenterByMail(
         validationResult.email
       );
-      console.log(data);
-      if (!data || data == null) {
-        throw next(
-          new AppError('Unable to fetch data', StatusCodes.EXPECTATION_FAILED)
+      
+      if (!data || data == "null") {
+        return next(
+          new AppError('Unable to fetch data because the hangout center email does not exist', StatusCodes.EXPECTATION_FAILED)
         );
       }
       return res.status(StatusCodes.OK).json({
@@ -220,7 +220,6 @@ class HangoutCenterController {
                 req.body
             );
             const data = await hangoutcenter.findOneHangoutCenterByCategory(validationResult.Category);
-            console.log(data)
             if (!data || data == "null") {
                 return  next(
                     new AppError(`Unable to fetch data because hangout center category does not exist`, StatusCodes.EXPECTATION_FAILED)
@@ -256,7 +255,7 @@ class HangoutCenterController {
                 return  next(
                     new AppError(`Unable to fetch data because hangout center booking category does not exist`, StatusCodes.EXPECTATION_FAILED)
                   );
-            }
+            };
           
             return res.status(StatusCodes.OK).json({
                 success: true,
@@ -286,7 +285,7 @@ class HangoutCenterController {
                return  next(
                    new AppError(`Unable to fetch data because hangout center phone number does not exist`, StatusCodes.EXPECTATION_FAILED)
                  );
-           }
+           };
          
            return res.status(StatusCodes.OK).json({
                success: true,
@@ -297,7 +296,7 @@ class HangoutCenterController {
        } catch (error) {
            if (error.stack.includes('ValidationError') === true) {
                return ErrorHandler.ValidatorError(error, next);
-             }
+             };
              return ErrorHandler.GeneralQuerryError(error, next);
            
        }
@@ -317,6 +316,6 @@ class HangoutCenterController {
     //console.log(filePath)
     console.log(images);
   }
-}
+};
 
 module.exports = { HangoutCenterController };

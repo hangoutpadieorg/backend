@@ -16,7 +16,7 @@ class HangoutCenter extends UserDbQuery {
         if (data == null) {
             return "null"
         }
-        return data
+        return data;
     }
     async findOneHangoutCenterByName(name) {
         /**
@@ -26,7 +26,7 @@ class HangoutCenter extends UserDbQuery {
         if (data == null) {
             return "null"
         }
-        return data
+        return data;
     }
     async findOneHangoutCenterByPhoneNumber(phoneNumber) {
          /**
@@ -36,13 +36,13 @@ class HangoutCenter extends UserDbQuery {
         if (data == null) {
             return "null"
         }
-        return data
+        return data;
     }
-    async findOneHangoutCenterByCategory(category) {
+    async findOneHangoutCenterByCategory(categories) {
         /**
         * To query  hangout center by phone number
         */
-       const data = await hangoutcenter.findOne({ category:category })
+       const data = await hangoutcenter.findOne({ categories:categories })
        if (data == null) {
            return "null"
        }
@@ -59,7 +59,7 @@ class HangoutCenter extends UserDbQuery {
        return data
    }
     async findHangoutCenter() {
-        const data = await hangoutcenter.find().toArray()
+        const data = await hangoutcenter.find().toArray();
         return data
     }
 };

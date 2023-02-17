@@ -38,8 +38,6 @@ class Validator{
 
 const ErrorHandler = {
     ValidatorError(error, next) {
-        console.log(error)
-        console.log("inside error")
             const message = error.message.split(":")[0];
             return next(new AppError(`Validation Error : ${message}`,StatusCodes.BAD_REQUEST))
         
