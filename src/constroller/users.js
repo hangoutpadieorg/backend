@@ -345,7 +345,7 @@ const mailtest = async (req, res, next) => {
       html: 'testing mail',
     };
     const mail = await sendMail.send(mailOptions)
-    console.log(mail)
+  
     // if (!mail) {
     //   return res.status(StatusCodes.EXPECTATION_FAILED).json({
     //     succes: false,

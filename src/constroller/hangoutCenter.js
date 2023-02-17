@@ -163,7 +163,6 @@ class HangoutCenterController {
          */
     try {
       const data = await hangoutcenter.findHangoutCenter();
-      console.log(data);
       if (!data || data == null) {
         throw next(
           new AppError('Unable to fetch data', StatusCodes.EXPECTATION_FAILED)
@@ -313,8 +312,7 @@ class HangoutCenterController {
       image2: filePath.file2,
       //             image3: filePath.file3,
     };
-    //console.log(filePath)
-    console.log(images);
+    
   }
 };
 

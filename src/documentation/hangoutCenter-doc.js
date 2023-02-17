@@ -147,6 +147,10 @@ const HangoutCenterResponseList = [
       {
         "success": false,
         "message": "Unauthenticated Token!:invalid token "
+      },
+      {
+        "success": false,
+        "message": "You are not authorized to access this resourse, only a register vendor is allowed"
       }
 ]
 
@@ -155,7 +159,7 @@ const hangoutCenterRegistration = {
     description: "Create a HangoutCenter using form-data",
     requestBody: {
         content: {
-          "application/json": {
+          "multipart/form-data": {
             schema: {
               type: "object",
               properties: {
@@ -276,6 +280,17 @@ const hangoutCenterRegistration = {
               },
             },
           },
+          403: {
+            description: "Forbidden",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  example: HangoutCenterResponseList[18]
+                },
+              },
+            },
+          },
       },
 }
 
@@ -313,6 +328,17 @@ const getAllHangoutCenters = {
               schema: {
                 type: "object",
                 example: HangoutCenterResponseList[17]
+              },
+            },
+          },
+        },
+        403: {
+          description: "Forbidden",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                example: HangoutCenterResponseList[18]
               },
             },
           },
@@ -359,6 +385,17 @@ const getHangoutCenterByName = {
               schema: {
                 type: "object",
                 example: HangoutCenterResponseList[17]
+              },
+            },
+          },
+        },
+        403: {
+          description: "Forbidden",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                example: HangoutCenterResponseList[18]
               },
             },
           },
@@ -442,6 +479,17 @@ const getHangoutCenterByPhoneNumber = {
           },
         },
       },
+      403: {
+        description: "Forbidden",
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              example: HangoutCenterResponseList[18]
+            },
+          },
+        },
+      },
       417: {
           description: "Expectation Failed",
           content: {
@@ -517,6 +565,17 @@ const getHangoutCenterByEmail = {
             schema: {
               type: "object",
               example: HangoutCenterResponseList[17]
+            },
+          },
+        },
+      },
+      403: {
+        description: "Forbidden",
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              example: HangoutCenterResponseList[18]
             },
           },
         },
@@ -611,6 +670,17 @@ const getHangoutCenterByCategory = {
             },
           },
         },
+        403: {
+          description: "Forbidden",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                example: HangoutCenterResponseList[18]
+              },
+            },
+          },
+        },
         406: {
           description: "Not Acceptable",
           content: {
@@ -675,6 +745,17 @@ const getHangoutCenterByBookingCategory = {
               schema: {
                 type: "object",
                 example: HangoutCenterResponseList[17]
+              },
+            },
+          },
+        },
+        403: {
+          description: "Forbidden",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                example: HangoutCenterResponseList[18]
               },
             },
           },

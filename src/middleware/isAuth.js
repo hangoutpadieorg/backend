@@ -49,4 +49,17 @@ const isAuthorized = async(req, res, next) => {
     }
 }
 
-module.exports = {isAuthenticated,isAuthorized}
+const vendorAuthorizer= async (req, res, next) => {
+    try {
+        const user = req.user;
+        if(user.role !="vendor"){
+           return next(new AppError("You are not authorized to access this resourse, only a register vendor is allowed", StatusCodes.FORBIDDEN)) 
+        }
+        next();
+    } catch (error) {
+        return next(new AppError(`Unable to Authenticate vendor with error: ${error}`, StatusCodes.SERVICE_UNAVAILABLE));
+    
+    }
+}
+
+module.exports = {isAuthenticated,isAuthorized,vendorAuthorizer}

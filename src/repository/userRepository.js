@@ -12,7 +12,6 @@ class UserDbQuery{
     }
     async creatOneUser(users) {
         const db=client.db("Hangoutpadie").collection("user")
-        console.log(user)
        const Users = new User({
             name: users.name,
             email: users.email,
