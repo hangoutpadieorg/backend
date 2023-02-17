@@ -51,6 +51,10 @@ class UserDbQuery{
         const modify = await user.findOneAndUpdate({ email }, { $set: { password: hashedPassword } }, { new: true })
         return modify
     }
+    async getAllUsers(){
+        const data= await user.find({}).toArray()
+        return data
+    }
 }
 
 module.exports = {UserDbQuery};

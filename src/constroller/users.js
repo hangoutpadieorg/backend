@@ -316,6 +316,23 @@ const signOut = async (req, res, next) => {
   }
 };
 
+const getAllUsers= async(req, res, next) => {
+  try {
+    const data= await userDbQuery.getAllUsers()
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      data:data
+    })
+  } catch (error) {
+    return next(
+      new AppError(
+        `Unable to get all user with error: ${error}`,
+        StatusCodes.SERVICE_UNAVAILABLE
+      )
+    );
+  }
+}
+
 const mailtest = async (req, res, next) => {
   try {
 
@@ -353,5 +370,6 @@ module.exports = {
   forgotPassword,
   resetPassword,
   changePassword,
+  getAllUsers,
   mailtest
 };

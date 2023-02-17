@@ -139,6 +139,14 @@ const HangoutCenterResponseList = [
       {
         "success": false,
         "message": "Validation Error : \"bookingCategory\" is required"
+      },
+      {
+        "success": false,
+        "message": "Authorization token can not be empty"
+      },
+      {
+        "success": false,
+        "message": "Unauthenticated Token!:invalid token "
       }
 ]
 
@@ -246,6 +254,28 @@ const hangoutCenterRegistration = {
               },
             },
           },
+          406: {
+            description: "Not Acceptable",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  example: HangoutCenterResponseList[16]
+                },
+              },
+            },
+          },
+          401: {
+            description: "Unauthorized",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  example: HangoutCenterResponseList[17]
+                },
+              },
+            },
+          },
       },
 }
 
@@ -265,7 +295,28 @@ const getAllHangoutCenters = {
             },
           },
         },
-        
+        406: {
+          description: "Not Acceptable",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                example: HangoutCenterResponseList[16]
+              },
+            },
+          },
+        },
+        401: {
+          description: "Unauthorized",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                example: HangoutCenterResponseList[17]
+              },
+            },
+          },
+        },
       },
 }
 
@@ -301,6 +352,17 @@ const getHangoutCenterByName = {
             },
           },
         },
+        401: {
+          description: "Unauthorized",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                example: HangoutCenterResponseList[17]
+              },
+            },
+          },
+        },
         417: {
             description: "Expectation Failed",
             content: {
@@ -319,6 +381,17 @@ const getHangoutCenterByName = {
                 schema: {
                   type: "object",
                   example: HangoutCenterResponseList[6]
+                },
+              },
+            },
+          },
+          406: {
+            description: "Not Acceptable",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  example: HangoutCenterResponseList[16]
                 },
               },
             },
@@ -358,6 +431,17 @@ const getHangoutCenterByPhoneNumber = {
           },
         },
       },
+      401: {
+        description: "Unauthorized",
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              example: HangoutCenterResponseList[17]
+            },
+          },
+        },
+      },
       417: {
           description: "Expectation Failed",
           content: {
@@ -380,6 +464,17 @@ const getHangoutCenterByPhoneNumber = {
             },
           },
         },
+        406: {
+          description: "Not Acceptable",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                example: HangoutCenterResponseList[16]
+              },
+            },
+          },
+        },
     },
 }
 
@@ -396,7 +491,7 @@ const getHangoutCenterByEmail = {
                           type: "string",
                           description:
                               "contact email of the center ",
-                          example: "samlaja1292@gmail",
+                          example: "samlaja1292@gmail.com",
                       },
                   }
               }
@@ -411,6 +506,17 @@ const getHangoutCenterByEmail = {
             schema: {
               type: "object",
               example: HangoutCenterResponseList[10]
+            },
+          },
+        },
+      },
+      401: {
+        description: "Unauthorized",
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              example: HangoutCenterResponseList[17]
             },
           },
         },
@@ -433,6 +539,17 @@ const getHangoutCenterByEmail = {
               schema: {
                 type: "object",
                 example: HangoutCenterResponseList[12]
+              },
+            },
+          },
+        },
+        406: {
+          description: "Not Acceptable",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                example: HangoutCenterResponseList[16]
               },
             },
           },
@@ -483,6 +600,28 @@ const getHangoutCenterByCategory = {
             },
           },
         },
+        401: {
+          description: "Unauthorized",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                example: HangoutCenterResponseList[17]
+              },
+            },
+          },
+        },
+        406: {
+          description: "Not Acceptable",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                example: HangoutCenterResponseList[16]
+              },
+            },
+          },
+        },
     },
 }
 
@@ -525,6 +664,28 @@ const getHangoutCenterByBookingCategory = {
               schema: {
                 type: "object",
                 example: HangoutCenterResponseList[15]
+              },
+            },
+          },
+        },
+        401: {
+          description: "Unauthorized",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                example: HangoutCenterResponseList[17]
+              },
+            },
+          },
+        },
+        406: {
+          description: "Not Acceptable",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                example: HangoutCenterResponseList[16]
               },
             },
           },
